@@ -93,20 +93,20 @@ ORDER BY avg_company_rating DESC;
 
 --     11. Find all the job titles that contain the word ‘Analyst’. How many different job titles are there?
 
-SELECT COUNT(*) AS count_analyst_titles
+SELECT COUNT(DISTINCT title) AS count_analyst_titles
 FROM data_analyst_jobs
-WHERE title LIKE '%Analyst%';
+WHERE LOWER(title) LIKE '%analyst%';
 
--- ANSWER: 1636
+-- ANSWER: 774
 
 --     12. How many different job titles do not contain either the word ‘Analyst’ or the word ‘Analytics’? What word do these positions have in common?
 
-SELECT COUNT(*) AS count_not_analyst_titles
+SELECT COUNT(DISTINCT title) AS count_not_analyst_titles
 FROM data_analyst_jobs
-WHERE title NOT LIKE '%Analyst%'
-AND title NOT LIKE '%Analytics%';
+WHERE LOWER(title) NOT LIKE '%analyst%'
+AND LOWER(title) NOT LIKE '%analytics%';
 
--- ANSWERS: 39; They are all spelled either all upper or all lower cased.
+-- ANSWERS: 4; Tableau
 
 -- BONUS: You want to understand which jobs requiring SQL are hard to fill. Find the number of jobs by industry (domain) that require SQL and have been posted longer than 3 weeks.
 
@@ -114,5 +114,15 @@ AND title NOT LIKE '%Analytics%';
 --     *Order your results so that the domain with the greatest number of hard to fill jobs is at the top.
 --     *Which three industries are in the top 4 on this list? How many jobs have been listed for more than 3 weeks for each of the top 4?
 
-SELECT *
-FROM data_analyst_jobs;
+SELECT
+	domain,
+	COUNT(title) AS amount_of_jobs
+FROM data_analyst_jobs
+WHERE domain IS NOT NULL
+AND days_since_posting > 21
+AND skill LIKE '%SQL%'
+GROUP BY domain
+ORDER BY amount_of_jobs DESC
+LIMIT 4;
+
+-- ANSWERS: 'Internet and Software' 62, 'Banks and Finanial Services' 61, 'Consulting and Business Services' 57, 'Health Care' 52
