@@ -38,19 +38,33 @@ SELECT COUNT(*) AS count_bt_500_1k
 FROM data_analyst_jobs
 WHERE review_count BETWEEN 500 AND 1000;
 
-ANSWER: 151
+-- ANSWER: 151
 
 --     6. Show the average star rating for companies in each state. The output should show the state as state and the average rating for the state as avg_rating. Which state shows the highest average rating?
 
-SELECT
+SELECT 
 	location,
 	AVG(star_rating) AS avg_rating
 FROM data_analyst_jobs
-ORDER BY AVG(star_rating);
+GROUP BY location
+ORDER BY AVG(star_rating) DESC;
+
+-- ANSWER: NE
 
 --     7. Select unique job titles from the data_analyst_jobs table. How many are there?
 
+SELECT COUNT(DISTINCT title) AS count_unique_titles
+FROM data_analyst_jobs;
+
+-- ANSWER: 881
+
 --     8. How many unique job titles are there for California companies?
+
+SELECT COUNT(DISTINCT title) AS count_unique_ca_titles
+FROM data_analyst_jobs
+WHERE location = 'CA';
+
+-- ANSWER: 230
 
 --     9. Find the name of each company and its average star rating for all companies that have more than 5000 reviews across all locations. How many companies are there with more that 5000 reviews across all locations?
 
