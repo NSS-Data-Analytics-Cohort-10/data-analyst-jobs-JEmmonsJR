@@ -68,7 +68,28 @@ WHERE location = 'CA';
 
 --     9. Find the name of each company and its average star rating for all companies that have more than 5000 reviews across all locations. How many companies are there with more that 5000 reviews across all locations?
 
+SELECT
+	company,
+	SUM(review_count) AS review_amount,
+	AVG(star_rating) AS avg_company_rating
+FROM data_analyst_jobs
+GROUP BY company
+HAVING SUM(review_count) > 5000;
+
+-- ANSWER: 71
+
 --     10. Add the code to order the query in #9 from highest to lowest average star rating. Which company with more than 5000 reviews across all locations in the dataset has the highest star rating? What is that rating?
+
+SELECT
+	company,
+	SUM(review_count) AS review_amount,
+	AVG(star_rating) AS avg_company_rating
+FROM data_analyst_jobs
+GROUP BY company
+HAVING SUM(review_count) > 5000
+ORDER BY avg_company_rating DESC;
+
+--ANSWERS: Google; 4.3
 
 --     11. Find all the job titles that contain the word ‘Analyst’. How many different job titles are there?
 
