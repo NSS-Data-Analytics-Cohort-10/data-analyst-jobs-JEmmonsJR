@@ -93,7 +93,20 @@ ORDER BY avg_company_rating DESC;
 
 --     11. Find all the job titles that contain the word ‘Analyst’. How many different job titles are there?
 
+SELECT COUNT(*) AS count_analyst_titles
+FROM data_analyst_jobs
+WHERE title LIKE '%Analyst%';
+
+-- ANSWER: 1636
+
 --     12. How many different job titles do not contain either the word ‘Analyst’ or the word ‘Analytics’? What word do these positions have in common?
+
+SELECT COUNT(*) AS count_not_analyst_titles
+FROM data_analyst_jobs
+WHERE title NOT LIKE '%Analyst%'
+AND title NOT LIKE '%Analytics%';
+
+-- ANSWERS: 39; They are all spelled either all upper or all lower cased.
 
 -- BONUS: You want to understand which jobs requiring SQL are hard to fill. Find the number of jobs by industry (domain) that require SQL and have been posted longer than 3 weeks.
 
