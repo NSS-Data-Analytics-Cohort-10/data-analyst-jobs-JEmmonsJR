@@ -120,7 +120,7 @@ SELECT
 FROM data_analyst_jobs
 WHERE domain IS NOT NULL
 AND days_since_posting > 21
-AND skill LIKE '%SQL%'
+AND LOWER(skill) LIKE '%sql%'
 GROUP BY domain
 ORDER BY amount_of_jobs DESC
 LIMIT 4;
